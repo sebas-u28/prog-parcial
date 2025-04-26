@@ -1,0 +1,63 @@
+@model prog_parcial.Models.Player
+
+@{
+    ViewData["Title"] = "Registrar Jugador";
+    var equipos = ViewBag.Equipos as List<prog_parcial.Models.Team>;
+    var posiciones = ViewBag.Posiciones as List<string>;
+}
+
+<h2>Registrar Nuevo Jugador</h2>
+
+<!-- Mostrar errores generales -->
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label>Nombre</label>
+        <input asp-for="Nombre" class="form-control" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Edad</label>
+        <input asp-for="Edad" class="form-control" type="number" />
+        <span asp-validation-for="Edad" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Posición</label>
+        <select asp-for="Posicion" class="form-control">
+            <option value="">Seleccione una posición</option>
+            @foreach (var pos in posiciones)
+            {
+                <option value="@pos">@pos</option>
+            }
+        </select>
+        <span asp-validation-for="Posicion" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Equipo</label>
+        <select name="EquipoId" class="form-control">
+            <option value="">Seleccione un equipo</option>
+            @foreach (var equipo in equipos)
+            {
+                <option value="@equipo.Id">@equipo.Nombre</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
