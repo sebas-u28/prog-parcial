@@ -1,0 +1,36 @@
+@model List<prog_parcial.Controllers.JugadorConEquipoViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Jugadores";
+}
+
+<h2>Jugadores y sus Equipos</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Posición</th>
+            <th>Equipo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var jugador in Model)
+        {
+            <tr>
+                <td>@jugador.NombreJugador</td>
+                <td>@jugador.Edad</td>
+                <td>@jugador.Posicion</td>
+                <td>@jugador.NombreEquipo</td>
+            </tr>
+        }
+    </tbody>
+</table>
